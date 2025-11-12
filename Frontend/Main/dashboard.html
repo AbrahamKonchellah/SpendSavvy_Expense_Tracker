@@ -23,7 +23,7 @@
             <li><a href="#" class="nav-link" data-page="reports"><i class="fas fa-chart-bar"></i> <span>Reports</span></a></li>
             <li><a href="#" class="nav-link" data-page="budgets"><i class="fas fa-wallet"></i> <span>Budgets</span></a></li>
             <li><a href="#" class="nav-link" data-page="settings"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
-            <li><a href="#" class="nav-link" data-page="help"><i class="fas fa-question-circle"></i> <span>Help</span></a></li>
+            <li><a href="#" class="nav-link" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> <span>Logout</span></a></li>
         </ul>
     </div>
 
@@ -34,8 +34,8 @@
             <div class="header">
                 <h2>Dashboard</h2>
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=4361ee&color=fff" alt="User" id="userAvatar">
+                    <span id="userDisplayName">Loading...</span>
                 </div>
             </div>
 
@@ -48,10 +48,8 @@
                             <i class="fas fa-wallet"></i>
                         </div>
                     </div>
-                    <div class="card-value">Ksh4,250.75</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i> 12.5% from last month
-                    </div>
+                    <div class="card-value" id="totalBalance">Ksh0.00</div>
+                    <div class="card-change" id="balanceChange">No data yet</div>
                 </div>
 
                 <div class="card">
@@ -61,10 +59,8 @@
                             <i class="fas fa-arrow-down"></i>
                         </div>
                     </div>
-                    <div class="card-value">Ksh5,800.00</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-arrow-up"></i> 8.2% from last month
-                    </div>
+                    <div class="card-value" id="totalIncome">Ksh0.00</div>
+                    <div class="card-change" id="incomeChange">No data yet</div>
                 </div>
 
                 <div class="card">
@@ -74,10 +70,8 @@
                             <i class="fas fa-arrow-up"></i>
                         </div>
                     </div>
-                    <div class="card-value">Ksh1,549.25</div>
-                    <div class="card-change negative">
-                        <i class="fas fa-arrow-down"></i> 3.1% from last month
-                    </div>
+                    <div class="card-value" id="totalExpenses">Ksh0.00</div>
+                    <div class="card-change" id="expenseChange">No data yet</div>
                 </div>
 
                 <div class="card">
@@ -87,153 +81,20 @@
                             <i class="fas fa-chart-line"></i>
                         </div>
                     </div>
-                    <div class="card-value">Ksh850.75</div>
-                    <div class="card-change positive">
-                        <i class="fas fa-check-circle"></i> On track
-                    </div>
+                    <div class="card-value" id="remainingBudget">Ksh0.00</div>
+                    <div class="card-change" id="budgetStatus">No budgets set</div>
                 </div>
             </div>
 
-            <!-- Charts Section -->
-            <div class="charts">
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <div class="chart-title">Spending by Category</div>
-                        <select class="form-control" style="width: auto;">
-                            <option>Last 30 days</option>
-                            <option>Last 3 months</option>
-                            <option>Last 6 months</option>
-                            <option>This year</option>
-                        </select>
-                    </div>
-                    <canvas id="categoryChart"></canvas>
+            <!-- Empty State Messages -->
+            <div class="empty-state" id="dashboardEmptyState">
+                <i class="fas fa-chart-line"></i>
+                <h3>Welcome to Your Dashboard!</h3>
+                <p>Start by adding your first transaction or setting up a budget to see your financial overview here.</p>
+                <div class="empty-state-actions">
+                    <button class="btn btn-primary" id="addFirstTransaction">Add First Transaction</button>
+                    <button class="btn btn-secondary" id="setFirstBudget">Set First Budget</button>
                 </div>
-
-                <div class="chart-container">
-                    <div class="chart-header">
-                        <div class="chart-title">Income vs Expenses</div>
-                        <select class="form-control" style="width: auto;">
-                            <option>Last 30 days</option>
-                            <option>Last 3 months</option>
-                            <option>Last 6 months</option>
-                            <option>This year</option>
-                        </select>
-                    </div>
-                    <canvas id="comparisonChart"></canvas>
-                </div>
-            </div>
-
-            <!-- Budgets Section -->
-            <div class="section-header">
-                <div class="section-title">Budget Overview</div>
-                <button class="btn btn-primary" id="addBudgetBtn">
-                    <i class="fas fa-plus"></i> Set Budget
-                </button>
-            </div>
-
-            <div class="budget-cards">
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Food & Dining</div>
-                        <div class="budget-amount">Ksh450 / Ksh500</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-warning" style="width: 90%"></div>
-                    </div>
-                    <div class="budget-status">Ksh50 remaining</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Transportation</div>
-                        <div class="budget-amount">Ksh120 / Ksh200</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 60%"></div>
-                    </div>
-                    <div class="budget-status">Ksh80 remaining</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Entertainment</div>
-                        <div class="budget-amount">Ksh180 / Ksh150</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-danger" style="width: 120%"></div>
-                    </div>
-                    <div class="budget-status">Ksh30 over budget</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Shopping</div>
-                        <div class="budget-amount">Ksh300 / Ksh400</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 75%"></div>
-                    </div>
-                    <div class="budget-status">Ksh100 remaining</div>
-                </div>
-            </div>
-
-            <!-- Transactions Section -->
-            <div class="section-header">
-                <div class="section-title">Recent Transactions</div>
-                <div>
-                    <button class="btn btn-secondary" style="margin-right: 10px;">
-                        <i class="fas fa-filter"></i> Filter
-                    </button>
-                    <button class="btn btn-primary" id="addTransactionBtn">
-                        <i class="fas fa-plus"></i> Add Transaction
-                    </button>
-                </div>
-            </div>
-
-            <div class="transactions">
-                <table>
-                    <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Amount</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>Oct 15, 2023</td>
-                        <td>Grocery Shopping</td>
-                        <td><span class="category food">Food</span></td>
-                        <td class="transaction-expense">-Ksh85.50</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 14, 2023</td>
-                        <td>Salary Deposit</td>
-                        <td><span class="category">Income</span></td>
-                        <td class="transaction-income">+Ksh2,500.00</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 12, 2023</td>
-                        <td>Gas Station</td>
-                        <td><span class="category transport">Transport</span></td>
-                        <td class="transaction-expense">-Ksh45.00</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
             </div>
         </div>
 
@@ -242,24 +103,28 @@
             <div class="header">
                 <h2>Transactions</h2>
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=4361ee&color=fff" alt="User" id="userAvatar2">
+                    <span id="userDisplayName2">Loading...</span>
                 </div>
             </div>
 
             <div class="section-header">
                 <div class="section-title">All Transactions</div>
-                <div>
-                    <button class="btn btn-secondary" style="margin-right: 10px;">
-                        <i class="fas fa-filter"></i> Filter
-                    </button>
-                    <button class="btn btn-primary" id="addTransactionBtn2">
-                        <i class="fas fa-plus"></i> Add Transaction
-                    </button>
-                </div>
+                <button class="btn btn-primary" id="addTransactionBtn">
+                    <i class="fas fa-plus"></i> Add Transaction
+                </button>
             </div>
 
-            <div class="transactions">
+            <!-- Empty Transactions State -->
+            <div class="empty-state" id="transactionsEmptyState">
+                <i class="fas fa-exchange-alt"></i>
+                <h3>No Transactions Yet</h3>
+                <p>Start tracking your income and expenses by adding your first transaction.</p>
+                <button class="btn btn-primary" id="addFirstTransaction2">Add First Transaction</button>
+            </div>
+
+            <!-- Transactions Table (initially hidden) -->
+            <div class="transactions" id="transactionsTable" style="display: none;">
                 <table>
                     <thead>
                     <tr>
@@ -270,67 +135,8 @@
                         <th>Actions</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>Oct 15, 2023</td>
-                        <td>Grocery Shopping</td>
-                        <td><span class="category food">Food</span></td>
-                        <td class="transaction-expense">-Ksh85.50</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 14, 2023</td>
-                        <td>Salary Deposit</td>
-                        <td><span class="category">Income</span></td>
-                        <td class="transaction-income">+Ksh2,500.00</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 12, 2023</td>
-                        <td>Gas Station</td>
-                        <td><span class="category transport">Transport</span></td>
-                        <td class="transaction-expense">-Ksh45.00</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 10, 2023</td>
-                        <td>Netflix Subscription</td>
-                        <td><span class="category entertainment">Entertainment</span></td>
-                        <td class="transaction-expense">-Ksh15.99</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 8, 2023</td>
-                        <td>Electricity Bill</td>
-                        <td><span class="category bills">Bills</span></td>
-                        <td class="transaction-expense">-Ksh120.75</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Oct 5, 2023</td>
-                        <td>Freelance Work</td>
-                        <td><span class="category">Income</span></td>
-                        <td class="transaction-income">+Ksh800.00</td>
-                        <td class="actions">
-                            <i class="fas fa-edit"></i>
-                            <i class="fas fa-trash"></i>
-                        </td>
-                    </tr>
+                    <tbody id="transactionsBody">
+                    <!-- Transactions will be loaded here dynamically -->
                     </tbody>
                 </table>
             </div>
@@ -341,49 +147,21 @@
             <div class="header">
                 <h2>Reports & Analytics</h2>
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=4361ee&color=fff" alt="User" id="userAvatar3">
+                    <span id="userDisplayName3">Loading...</span>
                 </div>
             </div>
 
-            <div class="section-header">
-                <div class="section-title">Financial Reports</div>
-                <select class="form-control" style="width: auto;">
-                    <option>Last 30 days</option>
-                    <option>Last 3 months</option>
-                    <option>Last 6 months</option>
-                    <option>This year</option>
-                </select>
+            <!-- Empty Reports State -->
+            <div class="empty-state" id="reportsEmptyState">
+                <i class="fas fa-chart-bar"></i>
+                <h3>No Data for Reports</h3>
+                <p>Add some transactions to see beautiful charts and insights about your spending habits.</p>
             </div>
 
-            <div class="reports-grid">
-                <div class="report-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Spending by Category</div>
-                    </div>
-                    <canvas id="reportCategoryChart"></canvas>
-                </div>
-
-                <div class="report-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Monthly Trends</div>
-                    </div>
-                    <canvas id="monthlyTrendsChart"></canvas>
-                </div>
-
-                <div class="report-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Income Sources</div>
-                    </div>
-                    <canvas id="incomeSourcesChart"></canvas>
-                </div>
-
-                <div class="report-card">
-                    <div class="chart-header">
-                        <div class="chart-title">Yearly Comparison</div>
-                    </div>
-                    <canvas id="yearlyComparisonChart"></canvas>
-                </div>
+            <!-- Reports Content (initially hidden) -->
+            <div id="reportsContent" style="display: none;">
+                <!-- Reports will be loaded here when data exists -->
             </div>
         </div>
 
@@ -392,84 +170,29 @@
             <div class="header">
                 <h2>Budget Management</h2>
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=4361ee&color=fff" alt="User" id="userAvatar4">
+                    <span id="userDisplayName4">Loading...</span>
                 </div>
             </div>
 
             <div class="section-header">
                 <div class="section-title">Current Budgets</div>
-                <button class="btn btn-primary" id="addBudgetBtn2">
+                <button class="btn btn-primary" id="addBudgetBtn">
                     <i class="fas fa-plus"></i> Set New Budget
                 </button>
             </div>
 
-            <div class="budget-cards">
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Food & Dining</div>
-                        <div class="budget-amount">Ksh450 / Ksh500</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-warning" style="width: 90%"></div>
-                    </div>
-                    <div class="budget-status">Ksh50 remaining</div>
-                </div>
+            <!-- Empty Budgets State -->
+            <div class="empty-state" id="budgetsEmptyState">
+                <i class="fas fa-wallet"></i>
+                <h3>No Budgets Set</h3>
+                <p>Create your first budget to start tracking your spending limits and financial goals.</p>
+                <button class="btn btn-primary" id="setFirstBudget2">Set First Budget</button>
+            </div>
 
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Transportation</div>
-                        <div class="budget-amount">Ksh120 / Ksh200</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 60%"></div>
-                    </div>
-                    <div class="budget-status">Ksh80 remaining</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Entertainment</div>
-                        <div class="budget-amount">Ksh180 / Ksh150</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-danger" style="width: 120%"></div>
-                    </div>
-                    <div class="budget-status">Ksh30 over budget</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Shopping</div>
-                        <div class="budget-amount">Ksh300 / Ksh400</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 75%"></div>
-                    </div>
-                    <div class="budget-status">Ksh100 remaining</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Utilities</div>
-                        <div class="budget-amount">Ksh180 / Ksh250</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 72%"></div>
-                    </div>
-                    <div class="budget-status">Ksh70 remaining</div>
-                </div>
-
-                <div class="budget-card">
-                    <div class="budget-header">
-                        <div class="budget-title">Healthcare</div>
-                        <div class="budget-amount">Ksh75 / Ksh150</div>
-                    </div>
-                    <div class="progress-bar">
-                        <div class="progress progress-safe" style="width: 50%"></div>
-                    </div>
-                    <div class="budget-status">Ksh75 remaining</div>
-                </div>
+            <!-- Budgets Content (initially hidden) -->
+            <div class="budget-cards" id="budgetsContent" style="display: none;">
+                <!-- Budgets will be loaded here dynamically -->
             </div>
         </div>
 
@@ -478,165 +201,23 @@
             <div class="header">
                 <h2>Settings</h2>
                 <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
+                    <img src="https://ui-avatars.com/api/?name=User+Name&background=4361ee&color=fff" alt="User" id="userAvatar5">
+                    <span id="userDisplayName5">Loading...</span>
                 </div>
             </div>
 
             <div class="settings-grid">
                 <div class="settings-card">
                     <div class="settings-title">Account Settings</div>
-
                     <div class="form-group">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" value="John Doe">
+                        <input type="text" class="form-control" id="userNameInput">
                     </div>
-
                     <div class="form-group">
                         <label class="form-label">Email Address</label>
-                        <input type="email" class="form-control" value="john.doe@example.com">
+                        <input type="email" class="form-control" id="userEmailInput" readonly>
                     </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Currency</label>
-                        <select class="form-control">
-                            <option>KSH (Ksh)</option>
-                            <option>EUR (€)</option>
-                            <option>GBP (£)</option>
-                            <option>JPY (¥)</option>
-                        </select>
-                    </div>
-
-                    <button class="btn btn-primary">Save Changes</button>
-                </div>
-
-                <div class="settings-card">
-                    <div class="settings-title">Security</div>
-
-                    <div class="form-group">
-                        <label class="form-label">Current Password</label>
-                        <input type="password" class="form-control" placeholder="Enter current password">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">New Password</label>
-                        <input type="password" class="form-control" placeholder="Enter new password">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Confirm New Password</label>
-                        <input type="password" class="form-control" placeholder="Confirm new password">
-                    </div>
-
-                    <button class="btn btn-primary">Update Password</button>
-                </div>
-
-                <div class="settings-card">
-                    <div class="settings-title">Notifications</div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <input type="checkbox" checked> Budget alerts
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <input type="checkbox" checked> Weekly reports
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <input type="checkbox"> Monthly summaries
-                        </label>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">
-                            <input type="checkbox" checked> Security alerts
-                        </label>
-                    </div>
-
-                    <button class="btn btn-primary">Save Preferences</button>
-                </div>
-
-                <div class="settings-card">
-                    <div class="settings-title">Data Management</div>
-
-                    <div class="form-group">
-                        <p>Export your financial data for backup or analysis.</p>
-                        <button class="btn btn-secondary" style="width: 100%; margin-bottom: 10px;">
-                            <i class="fas fa-download"></i> Export Data
-                        </button>
-                    </div>
-
-                    <div class="form-group">
-                        <p>Delete your account and all associated data.</p>
-                        <button class="btn btn-secondary" style="width: 100%; background-color: var(--danger);">
-                            <i class="fas fa-trash"></i> Delete Account
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Help Page -->
-        <div class="page" id="help">
-            <div class="header">
-                <h2>Help & Support</h2>
-                <div class="user-info">
-                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=4361ee&color=fff" alt="User">
-                    <span>John Doe</span>
-                </div>
-            </div>
-
-            <div class="help-sections">
-                <div class="help-card">
-                    <div class="settings-title">Frequently Asked Questions</div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">How do I add a new transaction?</div>
-                        <div class="faq-answer">Go to the Transactions page and click the "Add Transaction" button. Fill in the details and save.</div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">Can I set budgets for different categories?</div>
-                        <div class="faq-answer">Yes, go to the Budgets page and click "Set New Budget" to create budgets for different spending categories.</div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">How do I view my spending reports?</div>
-                        <div class="faq-answer">Navigate to the Reports page to see various charts and visualizations of your financial data.</div>
-                    </div>
-
-                    <div class="faq-item">
-                        <div class="faq-question">Is my financial data secure?</div>
-                        <div class="faq-answer">Yes, we use industry-standard encryption to protect your data and never share it with third parties.</div>
-                    </div>
-                </div>
-
-                <div class="help-card">
-                    <div class="settings-title">Get Help</div>
-
-                    <div class="form-group">
-                        <label class="form-label">Subject</label>
-                        <input type="text" class="form-control" placeholder="Enter subject">
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Message</label>
-                        <textarea class="form-control" rows="5" placeholder="Describe your issue"></textarea>
-                    </div>
-
-                    <button class="btn btn-primary">Send Message</button>
-
-                    <div style="margin-top: 30px;">
-                        <div class="settings-title">Contact Information</div>
-                        <p><i class="fas fa-envelope" style="margin-right: 10px;"></i> support@spendsavvy.com</p>
-                        <p><i class="fas fa-phone" style="margin-right: 10px;"></i> 0712345678</p>
-                        <p><i class="fas fa-clock" style="margin-right: 10px;"></i> Mon-Fri 9AM-6PM EST</p>
-                    </div>
+                    <button class="btn btn-primary" id="saveProfileBtn">Save Changes</button>
                 </div>
             </div>
         </div>
@@ -655,19 +236,16 @@
                 <label class="form-label">Description</label>
                 <input type="text" class="form-control" placeholder="Enter description" required>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Amount</label>
                     <input type="number" class="form-control" placeholder="0.00" step="0.01" required>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">Date</label>
                     <input type="date" class="form-control" required>
                 </div>
             </div>
-
             <div class="form-row">
                 <div class="form-group">
                     <label class="form-label">Type</label>
@@ -677,7 +255,6 @@
                         <option value="expense">Expense</option>
                     </select>
                 </div>
-
                 <div class="form-group">
                     <label class="form-label">Category</label>
                     <select class="form-control" required>
@@ -692,12 +269,6 @@
                     </select>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">Notes (Optional)</label>
-                <textarea class="form-control" rows="3" placeholder="Add any additional notes"></textarea>
-            </div>
-
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary">Cancel</button>
                 <button type="submit" class="btn btn-primary">Add Transaction</button>
@@ -727,21 +298,10 @@
                     <option value="other">Other</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <label class="form-label">Budget Amount</label>
                 <input type="number" class="form-control" placeholder="0.00" step="0.01" required>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">Period</label>
-                <select class="form-control" required>
-                    <option value="monthly">Monthly</option>
-                    <option value="weekly">Weekly</option>
-                    <option value="yearly">Yearly</option>
-                </select>
-            </div>
-
             <div class="form-actions">
                 <button type="button" class="btn btn-secondary">Cancel</button>
                 <button type="submit" class="btn btn-primary">Set Budget</button>
