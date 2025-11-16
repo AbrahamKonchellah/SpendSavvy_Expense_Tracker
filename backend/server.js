@@ -36,7 +36,7 @@ db.connect(err => {
   else console.log('Connected to database!');
 });
 
-// Nodemailer – with full logging
+// Nodemailer
 const transporter = nodemailer.createTransport({
   host: 'smtp.gmail.com',
   port: 587,
@@ -50,7 +50,7 @@ const transporter = nodemailer.createTransport({
 // Test
 app.get('/api/test', (req, res) => res.json({ message: 'Server is working!' }));
 
-// Signup (unchanged)
+// Signup 
 app.post('/api/auth/signup', (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) return res.json({ success: false, message: 'All fields required' });
@@ -71,7 +71,7 @@ app.post('/api/auth/signup', (req, res) => {
   });
 });
 
-// Login (unchanged)
+// Login 
 app.post('/api/auth/login', (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) return res.json({ success: false, message: 'Email & password required' });
@@ -89,7 +89,6 @@ app.post('/api/auth/login', (req, res) => {
   });
 });
 
-// FORGOT PASSWORD – FIXED & LOGGED
 app.post('/api/auth/forgot-password', async (req, res) => {
   console.log('\nFORGOT PASSWORD HIT');
   console.log('Time:', new Date().toLocaleString('en-KE', { timeZone: 'Africa/Nairobi' }));
@@ -99,7 +98,7 @@ app.post('/api/auth/forgot-password', async (req, res) => {
   if (!email) return res.json({ success: false, message: 'Email required' });
 
   try {
-    // FIXED: No destructuring
+    
     const users = await new Promise((resolve, reject) => {
       db.query('SELECT id, name FROM users WHERE email = ?', [email], (err, rows) => {
         err ? reject(err) : resolve(rows);
