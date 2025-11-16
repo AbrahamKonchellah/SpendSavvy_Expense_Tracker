@@ -177,6 +177,44 @@ function initializeEventListeners() {
     if (saveProfileBtn) {
         saveProfileBtn.addEventListener('click', saveProfile);
     }
+
+    // Close modal buttons
+    document.querySelectorAll('.modal .close').forEach(btn => {
+        btn.addEventListener('click', function() {
+            closeModal(this.closest('.modal'));
+        });
+    });
+
+    // Cancel buttons in modals
+    document.querySelectorAll('.modal .btn-secondary').forEach(btn => {
+        btn.addEventListener('click', function() {
+            closeModal(this.closest('.modal'));
+        });
+    });
+
+    // Transaction form submission
+    const transactionForm = document.getElementById('transactionForm');
+    if (transactionForm) {
+        transactionForm.addEventListener('submit', handleTransactionSubmit);
+    }
+
+    // Event delegation for transaction actions (edit/delete)
+    const transactionsBody = document.getElementById('transactionsBody');
+    if (transactionsBody) {
+        transactionsBody.addEventListener('click', handleTransactionActions);
+    }
+
+    // Budget form submission
+    const budgetForm = document.getElementById('budgetForm');
+    if (budgetForm) {
+        budgetForm.addEventListener('submit', handleBudgetSubmit);
+    }
+
+    // Event delegation for budget actions (edit/delete)
+    const budgetsContent = document.getElementById('budgetsContent');
+    if (budgetsContent) {
+        budgetsContent.addEventListener('click', handleBudgetActions);
+    }
 }
 
 // Update UI based on current data
@@ -219,8 +257,33 @@ function updateTransactionsPage() {
     } else {
         emptyState.style.display = 'none';
         table.style.display = 'block';
-        // TODO: Render transactions table
+        renderTransactionsTable();
     }
+}
+
+// Render transactions table
+function renderTransactionsTable() {
+    const transactionsBody = document.getElementById('transactionsBody');
+    transactionsBody.innerHTML = ''; // Clear existing rows
+
+    // Sort transactions by date in descending order
+    const sortedTransactions = [...transactions].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    sortedTransactions.forEach(transaction => {
+        const row = transactionsBody.insertRow();
+        row.innerHTML = `
+            <td>${new Date(transaction.date).toLocaleDateString()}</td>
+            <td>${transaction.description}</td>
+            <td><span class="category ${transaction.category}">${transaction.category}</span></td>
+            <td class="${transaction.type === 'income' ? 'transaction-income' : 'transaction-expense'}">
+                Ksh${transaction.amount.toFixed(2)}
+            </td>
+            <td class="actions">
+                <i class="fas fa-edit" data-id="${transaction.id}"></i>
+                <i class="fas fa-trash-alt" data-id="${transaction.id}"></i>
+            </td>
+        `;
+    });
 }
 
 // Update budgets page
@@ -234,8 +297,50 @@ function updateBudgetsPage() {
     } else {
         emptyState.style.display = 'none';
         content.style.display = 'block';
-        // TODO: Render budgets
+        renderBudgets();
     }
+}
+
+// Render budgets on the budgets page
+function renderBudgets() {
+    const budgetsContent = document.getElementById('budgetsContent');
+    budgetsContent.innerHTML = ''; // Clear existing budgets
+
+    budgets.forEach(budget => {
+        const totalSpent = transactions
+            .filter(t => t.type === 'expense' && t.category === budget.category)
+            .reduce((sum, t) => sum + Math.abs(t.amount), 0);
+
+        const remaining = budget.amount - totalSpent;
+        const percentage = (totalSpent / budget.amount) * 100;
+
+        let progressClass = 'progress-safe';
+        if (percentage > 75 && percentage < 100) {
+            progressClass = 'progress-warning';
+        } else if (percentage >= 100) {
+            progressClass = 'progress-danger';
+        }
+
+        const budgetCard = document.createElement('div');
+        budgetCard.classList.add('budget-card');
+        budgetCard.innerHTML = `
+            <div class="budget-header">
+                <div class="budget-title">${budget.category}</div>
+                <div class="budget-amount">Ksh${budget.amount.toFixed(2)}</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress ${progressClass}" style="width: ${Math.min(percentage, 100)}%;"></div>
+            </div>
+            <div class="budget-status">
+                Ksh${remaining.toFixed(2)} remaining
+            </div>
+            <div class="actions">
+                <i class="fas fa-edit" data-id="${budget.id}" data-type="budget"></i>
+                <i class="fas fa-trash-alt" data-id="${budget.id}" data-type="budget"></i>
+            </div>
+        `;
+        budgetsContent.appendChild(budgetCard);
+    });
 }
 
 // Update reports page
@@ -249,8 +354,129 @@ function updateReportsPage() {
     } else {
         emptyState.style.display = 'none';
         content.style.display = 'block';
-        // TODO: Render reports
+        renderSpendingChart();
+        renderIncomeExpenseChart();
     }
+}
+
+// Render spending by category chart
+let spendingChartInstance = null; // To store the chart instance
+
+function renderSpendingChart() {
+    const ctx = document.getElementById('spendingChart').getContext('2d');
+    
+    // Destroy existing chart if it exists
+    if (spendingChartInstance) {
+        spendingChartInstance.destroy();
+    }
+
+    const expenseTransactions = transactions.filter(t => t.type === 'expense');
+    const categorySpending = expenseTransactions.reduce((acc, t) => {
+        acc[t.category] = (acc[t.category] || 0) + Math.abs(t.amount);
+        return acc;
+    }, {});
+
+    const labels = Object.keys(categorySpending);
+    const data = Object.values(categorySpending);
+
+    spendingChartInstance = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: data,
+                backgroundColor: [
+                    '#4361ee', '#3f37c9', '#4cc9f0', '#f72585', '#f8961e', '#4895ef', '#a29bfe', '#ffeaa7'
+                ],
+                hoverOffset: 4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Spending by Category'
+                }
+            }
+        }
+    });
+}
+
+// Render income vs. expenses chart
+let incomeExpenseChartInstance = null; // To store the chart instance
+
+function renderIncomeExpenseChart() {
+    const ctx = document.getElementById('incomeExpenseChart').getContext('2d');
+
+    // Destroy existing chart if it exists
+    if (incomeExpenseChartInstance) {
+        incomeExpenseChartInstance.destroy();
+    }
+
+    const monthlyData = transactions.reduce((acc, t) => {
+        const date = new Date(t.date);
+        const monthYear = `${date.getFullYear()}-${date.getMonth() + 1}`;
+        if (!acc[monthYear]) {
+            acc[monthYear] = { income: 0, expense: 0 };
+        }
+        if (t.type === 'income') {
+            acc[monthYear].income += t.amount;
+        } else {
+            acc[monthYear].expense += Math.abs(t.amount);
+        }
+        return acc;
+    }, {});
+
+    const sortedMonths = Object.keys(monthlyData).sort((a, b) => new Date(a) - new Date(b));
+    const incomeData = sortedMonths.map(month => monthlyData[month].income);
+    const expenseData = sortedMonths.map(month => monthlyData[month].expense);
+
+    incomeExpenseChartInstance = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: sortedMonths,
+            datasets: [
+                {
+                    label: 'Income',
+                    data: incomeData,
+                    backgroundColor: '#4cc9f0',
+                    borderColor: '#4cc9f0',
+                    borderWidth: 1
+                },
+                {
+                    label: 'Expenses',
+                    data: expenseData,
+                    backgroundColor: '#f72585',
+                    borderColor: '#f72585',
+                    borderWidth: 1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: false,
+                    text: 'Income vs. Expenses'
+                }
+            },
+            scales: {
+                x: {
+                    stacked: false,
+                },
+                y: {
+                    stacked: false
+                }
+            }
+        }
+    });
 }
 
 // Update specific page content when navigated to
@@ -271,15 +497,125 @@ function updatePageContent(pageId) {
     }
 }
 
-// Modal functions (to be implemented)
+// Modal functions
+const transactionModal = document.getElementById('transactionModal');
+const budgetModal = document.getElementById('budgetModal');
+
+function openModal(modal) {
+    modal.style.display = 'flex';
+}
+
+function closeModal(modal) {
+    modal.style.display = 'none';
+}
+
 function openAddTransactionModal() {
-    showNotification('Add Transaction feature coming soon!');
+    openModal(transactionModal);
 }
 
 function openAddBudgetModal() {
-    showNotification('Add Budget feature coming soon!');
+    openModal(budgetModal);
 }
 
 function saveProfile() {
+    // This will be implemented later, for now, just show a notification
     showNotification('Profile save feature coming soon!');
+}
+
+// Handle transaction form submission
+function handleTransactionSubmit(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const description = form.querySelector('input[type="text"]').value;
+    const amount = parseFloat(form.querySelector('input[type="number"]').value);
+    const date = form.querySelector('input[type="date"]').value;
+    const type = form.querySelector('select:nth-of-type(1)').value;
+    const category = form.querySelector('select:nth-of-type(2)').value;
+
+    if (!description || !amount || !date || !type || !category) {
+        showNotification('Please fill in all transaction fields.', 'error');
+        return;
+    }
+
+    const newTransaction = {
+        id: Date.now(), // Simple unique ID
+        description,
+        amount: type === 'expense' ? -Math.abs(amount) : Math.abs(amount), // Ensure expense is negative
+        date,
+        type,
+        category
+    };
+
+    transactions.push(newTransaction);
+    saveUserData();
+    closeModal(transactionModal);
+    form.reset(); // Clear the form
+    updateUI();
+    showNotification('Transaction added successfully!', 'success');
+}
+
+// Handle transaction edit/delete actions
+function handleTransactionActions(e) {
+    const target = e.target;
+    const transactionId = parseInt(target.dataset.id);
+
+    if (target.classList.contains('fa-trash-alt')) {
+        // Delete transaction
+        if (confirm('Are you sure you want to delete this transaction?')) {
+            transactions = transactions.filter(t => t.id !== transactionId);
+            saveUserData();
+            updateUI();
+            showNotification('Transaction deleted successfully!', 'success');
+        }
+    } else if (target.classList.contains('fa-edit')) {
+        // Edit transaction (for now, just a placeholder)
+        showNotification('Edit transaction feature coming soon!', 'info');
+    }
+}
+
+// Handle budget form submission
+function handleBudgetSubmit(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const category = form.querySelector('select').value;
+    const amount = parseFloat(form.querySelector('input[type="number"]').value);
+
+    if (!category || !amount) {
+        showNotification('Please fill in all budget fields.', 'error');
+        return;
+    }
+
+    const newBudget = {
+        id: Date.now(),
+        category,
+        amount
+    };
+
+    budgets.push(newBudget);
+    saveUserData();
+    closeModal(budgetModal);
+    form.reset();
+    updateUI();
+    showNotification('Budget set successfully!', 'success');
+}
+
+// Handle budget edit/delete actions
+function handleBudgetActions(e) {
+    const target = e.target;
+    const budgetId = parseInt(target.dataset.id);
+
+    if (target.classList.contains('fa-trash-alt')) {
+        // Delete budget
+        if (confirm('Are you sure you want to delete this budget?')) {
+            budgets = budgets.filter(b => b.id !== budgetId);
+            saveUserData();
+            updateUI();
+            showNotification('Budget deleted successfully!', 'success');
+        }
+    } else if (target.classList.contains('fa-edit')) {
+        // Edit budget (for now, just a placeholder)
+        showNotification('Edit budget feature coming soon!', 'info');
+    }
 }

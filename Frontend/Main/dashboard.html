@@ -161,7 +161,20 @@
 
             <!-- Reports Content (initially hidden) -->
             <div id="reportsContent" style="display: none;">
-                <!-- Reports will be loaded here when data exists -->
+                <div class="charts">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">Spending by Category</div>
+                        </div>
+                        <canvas id="spendingChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <div class="chart-title">Income vs. Expenses</div>
+                        </div>
+                        <canvas id="incomeExpenseChart"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
 

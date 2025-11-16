@@ -48,132 +48,100 @@
             </div>
 
             <!-- Login Form -->
-            <form class="form active" id="loginForm">
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-group">
-                        <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
-                        <i class="fas fa-envelope input-icon"></i>
-                    </div>
-                    <div class="error-message" id="loginEmailError"></div>
-                </div>
+<form class="form active" id="loginForm">
+    <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div class="input-group">
+            <input type="email" id="loginEmail" class="form-control" placeholder="Enter your email" required>
+            <i class="fas fa-envelope input-icon"></i>
+        </div>
+        <div class="field-error" id="loginEmailError"></div>
+    </div>
 
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
-                        <i class="fas fa-lock input-icon"></i>
-                    </div>
-                    <div class="error-message" id="loginPasswordError"></div>
-                </div>
+    <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" id="loginPassword" class="form-control" placeholder="Enter your password" required>
+            <i class="fas fa-lock input-icon"></i>
+        </div>
+        <div class="field-error" id="loginPasswordError"></div>
+    </div>
 
-                <div class="remember-forgot">
-                    <div class="remember">
-                        <input type="checkbox" id="remember">
-                        <label for="remember">Remember me</label>
-                    </div>
-                    <a href="#" class="forgot">Forgot password?</a>
-                </div>
+    <div class="remember-forgot">
+        <div class="remember">
+            <input type="checkbox" id="remember">
+            <label for="remember">Remember me</label>
+        </div>
+        <a href="forgot-password.html" class="forgot">Forgot password?</a>
+    </div>
 
-                <button type="submit" class="btn btn-primary" id="loginBtn">
-                    <span class="btn-text">Sign In</span>
-                    <div class="btn-loading" style="display: none;">
-                        <i class="fas fa-spinner fa-spin"></i> Signing In...
-                    </div>
-                </button>
-
-                <div class="divider">
-                    <span>Or continue with</span>
-                </div>
-
-                <div class="social-login">
-                    <div class="social-btn google">
-                        <i class="fab fa-google"></i>
-                        <span>Google</span>
-                    </div>
-                    <div class="social-btn facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </div>
-                </div>
-
-                <div class="signup-link">
-                    Don't have an account? <a href="#" id="switchToSignup">Sign up</a>
-                </div>
-            </form>
+    <button type="submit" class="btn btn-primary" id="loginBtn">
+        <span class="btn-text">Sign In</span>
+        <div class="btn-loading" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Signing In...
+        </div>
+    </button>
+<div class="form-footer">
+    <p>Don't have an account? <a href="#" id="switchToSignup" style="color: var(--primary);">Sign up here</a></p>
+</div>
+</form>
 
             <!-- Signup Form -->
-            <form class="form" id="signupForm">
-                <div class="form-group">
-                    <label class="form-label">Full Name</label>
-                    <div class="input-group">
-                        <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
-                        <i class="fas fa-user input-icon"></i>
-                    </div>
-                    <div class="error-message" id="signupNameError"></div>
-                </div>
+<form class="form" id="signupForm">
+    <div class="form-group">
+        <label class="form-label">Full Name</label>
+        <div class="input-group">
+            <input type="text" id="signupName" class="form-control" placeholder="Enter your full name" required>
+            <i class="fas fa-user input-icon"></i>
+        </div>
+        <div class="field-error" id="signupNameError"></div>
+    </div>
 
-                <div class="form-group">
-                    <label class="form-label">Email Address</label>
-                    <div class="input-group">
-                        <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
-                        <i class="fas fa-envelope input-icon"></i>
-                    </div>
-                    <div class="error-message" id="signupEmailError"></div>
-                </div>
+    <div class="form-group">
+        <label class="form-label">Email Address</label>
+        <div class="input-group">
+            <input type="email" id="signupEmail" class="form-control" placeholder="Enter your email" required>
+            <i class="fas fa-envelope input-icon"></i>
+        </div>
+        <div class="field-error" id="signupEmailError"></div>
+    </div>
 
-                <div class="form-group">
-                    <label class="form-label">Password</label>
-                    <div class="input-group">
-                        <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
-                        <i class="fas fa-lock input-icon"></i>
-                    </div>
-                    <div class="error-message" id="signupPasswordError"></div>
-                </div>
+    <div class="form-group">
+        <label class="form-label">Password</label>
+        <div class="input-group">
+            <input type="password" id="signupPassword" class="form-control" placeholder="Create a password" required>
+            <i class="fas fa-lock input-icon"></i>
+        </div>
+        <div class="field-error" id="signupPasswordError"></div>
+    </div>
 
-                <div class="form-group">
-                    <label class="form-label">Confirm Password</label>
-                    <div class="input-group">
-                        <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
-                        <i class="fas fa-lock input-icon"></i>
-                    </div>
-                    <div class="error-message" id="signupConfirmPasswordError"></div>
-                </div>
+    <div class="form-group">
+        <label class="form-label">Confirm Password</label>
+        <div class="input-group">
+            <input type="password" id="signupConfirmPassword" class="form-control" placeholder="Confirm your password" required>
+            <i class="fas fa-lock input-icon"></i>
+        </div>
+        <div class="field-error" id="signupConfirmPasswordError"></div>
+    </div>
 
-                <div class="remember-forgot">
-                    <div class="remember">
-                        <input type="checkbox" id="terms" required>
-                        <label for="terms">I agree to the <a href="#" style="color: var(--primary);">Terms & Conditions</a></label>
-                    </div>
-                    <div class="error-message" id="termsError"></div>
-                </div>
+    <div class="remember-forgot">
+        <div class="remember">
+            <input type="checkbox" id="terms" required>
+            <label for="terms">I agree to the <a href="#" style="color: var(--primary);">Terms & Conditions</a></label>
+        </div>
+        <div class="field-error" id="termsError"></div>
+    </div>
 
-                <button type="submit" class="btn btn-primary" id="signupBtn">
-                    <span class="btn-text">Create Account</span>
-                    <div class="btn-loading" style="display: none;">
-                        <i class="fas fa-spinner fa-spin"></i> Creating Account...
-                    </div>
-                </button>
-
-                <div class="divider">
-                    <span>Or continue with</span>
-                </div>
-
-                <div class="social-login">
-                    <div class="social-btn google">
-                        <i class="fab fa-google"></i>
-                        <span>Google</span>
-                    </div>
-                    <div class="social-btn facebook">
-                        <i class="fab fa-facebook-f"></i>
-                        <span>Facebook</span>
-                    </div>
-                </div>
-
-                <div class="signup-link">
-                    Already have an account? <a href="#" id="switchToLogin">Sign in</a>
-                </div>
-            </form>
+    <button type="submit" class="btn btn-primary" id="signupBtn">
+        <span class="btn-text">Create Account</span>
+        <div class="btn-loading" style="display: none;">
+            <i class="fas fa-spinner fa-spin"></i> Creating Account...
+        </div>
+    </button>
+<div class="form-footer">
+    <p>Already have an account? <a href="#" id="switchToLogin" style="color: var(--primary);">Login here</a></p>
+</div>
+</form>
         </div>
     </div>
 </div>
@@ -181,333 +149,7 @@
 <!-- Notification Container -->
 <div id="notificationContainer" style="display: none;"></div>
 
-<script>
-// Authentication configuration
-const AUTH_CONFIG = {
-    tokenKey: 'spendsavvy_token',
-    userKey: 'spendsavvy_user',
-    apiBase: 'http://localhost:3000/api'
-};
+<script src="signin.js"></script>
 
-// Check if user is already logged in
-if (localStorage.getItem(AUTH_CONFIG.tokenKey)) {
-    window.location.href = '../Main/dashboard.html';
-}
-
-// Tab switching functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const tabs = document.querySelectorAll('.tab');
-    const forms = document.querySelectorAll('.form');
-
-    tabs.forEach(tab => {
-        tab.addEventListener('click', function() {
-            const targetTab = this.getAttribute('data-tab');
-            
-            // Update tabs
-            tabs.forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
-            
-            // Update forms
-            forms.forEach(form => form.classList.remove('active'));
-            document.getElementById(`${targetTab}Form`).classList.add('active');
-            
-            // Clear all errors when switching tabs
-            clearAllErrors();
-        });
-    });
-
-    // Form switching links
-    document.getElementById('switchToSignup').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('.tab[data-tab="signup"]').click();
-    });
-
-    document.getElementById('switchToLogin').addEventListener('click', (e) => {
-        e.preventDefault();
-        document.querySelector('.tab[data-tab="login"]').click();
-    });
-
-    // Login form handler
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        await handleLogin();
-    });
-
-    // Signup form handler
-    document.getElementById('signupForm').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        await handleSignup();
-    });
-
-    // Social login handlers
-    document.querySelectorAll('.social-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            showNotification('Social login coming soon!', 'info');
-        });
-    });
-
-    // Forgot password handler
-    document.querySelector('.forgot').addEventListener('click', (e) => {
-        e.preventDefault();
-        showNotification('Password reset feature coming soon!', 'info');
-    });
-});
-
-// Clear all error messages
-function clearAllErrors() {
-    document.querySelectorAll('.error-message').forEach(error => {
-        error.textContent = '';
-    });
-}
-
-// Show error for specific field
-function showError(fieldId, message) {
-    const errorElement = document.getElementById(fieldId + 'Error');
-    const inputElement = document.getElementById(fieldId);
-    
-    if (errorElement && inputElement) {
-        errorElement.textContent = message;
-        inputElement.style.borderColor = '#e74c3c';
-    }
-}
-
-// Clear error for specific field
-function clearError(fieldId) {
-    const errorElement = document.getElementById(fieldId + 'Error');
-    const inputElement = document.getElementById(fieldId);
-    
-    if (errorElement && inputElement) {
-        errorElement.textContent = '';
-        inputElement.style.borderColor = '';
-    }
-}
-
-// Show loading state
-function showLoading(buttonId) {
-    const button = document.getElementById(buttonId);
-    const btnText = button.querySelector('.btn-text');
-    const btnLoading = button.querySelector('.btn-loading');
-    
-    button.disabled = true;
-    btnText.style.display = 'none';
-    btnLoading.style.display = 'block';
-    
-    return () => {
-        button.disabled = false;
-        btnText.style.display = 'block';
-        btnLoading.style.display = 'none';
-    };
-}
-
-// Show notification
-function showNotification(message, type = 'success') {
-    const container = document.getElementById('notificationContainer');
-    const notification = document.createElement('div');
-    
-    notification.className = `notification ${type}`;
-    notification.innerHTML = `
-        <div class="notification-content">
-            <i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle'}"></i>
-            <span>${message}</span>
-        </div>
-    `;
-    
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: ${type === 'success' ? '#27ae60' : type === 'error' ? '#e74c3c' : '#3498db'};
-        color: white;
-        padding: 16px 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        z-index: 10000;
-        animation: slideIn 0.3s ease;
-    `;
-    
-    // Add CSS for animation
-    if (!document.querySelector('#notificationStyles')) {
-        const style = document.createElement('style');
-        style.id = 'notificationStyles';
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-    
-    container.appendChild(notification);
-    container.style.display = 'block';
-
-    // Remove after 4 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.parentNode.removeChild(notification);
-            }
-            if (container.children.length === 0) {
-                container.style.display = 'none';
-            }
-        }, 300);
-    }, 4000);
-}
-
-// Handle login
-async function handleLogin() {
-    const email = document.getElementById('loginEmail').value.trim();
-    const password = document.getElementById('loginPassword').value;
-    
-    // Clear previous errors
-    clearError('loginEmail');
-    clearError('loginPassword');
-    
-    // Validation
-    if (!email) {
-        showError('loginEmail', 'Email is required');
-        return;
-    }
-    
-    if (!password) {
-        showError('loginPassword', 'Password is required');
-        return;
-    }
-    
-    const stopLoading = showLoading('loginBtn');
-    
-    try {
-        const response = await fetch(`${AUTH_CONFIG.apiBase}/auth/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // Store authentication data
-            localStorage.setItem(AUTH_CONFIG.tokenKey, data.token);
-            localStorage.setItem(AUTH_CONFIG.userKey, JSON.stringify(data.user));
-            
-            showNotification('Login successful! Redirecting...', 'success');
-            
-            // Redirect to dashboard after short delay
-            setTimeout(() => {
-                window.location.href = '../Main/dashboard.html';
-            }, 1500);
-            
-        } else {
-            showNotification(data.message || 'Login failed', 'error');
-        }
-    } catch (error) {
-        showNotification('Network error. Please check if server is running.', 'error');
-    } finally {
-        stopLoading();
-    }
-}
-
-// Handle signup
-async function handleSignup() {
-    const name = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const password = document.getElementById('signupPassword').value;
-    const confirmPassword = document.getElementById('signupConfirmPassword').value;
-    const termsAccepted = document.getElementById('terms').checked;
-    
-    // Clear previous errors
-    clearError('signupName');
-    clearError('signupEmail');
-    clearError('signupPassword');
-    clearError('signupConfirmPassword');
-    clearError('terms');
-    
-    // Validation
-    let isValid = true;
-    
-    if (!name) {
-        showError('signupName', 'Full name is required');
-        isValid = false;
-    } else if (name.length < 2) {
-        showError('signupName', 'Name must be at least 2 characters');
-        isValid = false;
-    }
-    
-    if (!email) {
-        showError('signupEmail', 'Email is required');
-        isValid = false;
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        showError('signupEmail', 'Please enter a valid email address');
-        isValid = false;
-    }
-    
-    if (!password) {
-        showError('signupPassword', 'Password is required');
-        isValid = false;
-    } else if (password.length < 8) {
-        showError('signupPassword', 'Password must be at least 8 characters');
-        isValid = false;
-    }
-    
-    if (!confirmPassword) {
-        showError('signupConfirmPassword', 'Please confirm your password');
-        isValid = false;
-    } else if (password !== confirmPassword) {
-        showError('signupConfirmPassword', 'Passwords do not match');
-        isValid = false;
-    }
-    
-    if (!termsAccepted) {
-        showError('terms', 'You must accept the Terms & Conditions');
-        isValid = false;
-    }
-    
-    if (!isValid) return;
-    
-    const stopLoading = showLoading('signupBtn');
-    
-    try {
-        const response = await fetch(`${AUTH_CONFIG.apiBase}/auth/signup`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: name,
-                email: email,
-                password: password
-            })
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            // Store authentication data
-            localStorage.setItem(AUTH_CONFIG.tokenKey, data.token);
-            localStorage.setItem(AUTH_CONFIG.userKey, JSON.stringify(data.user));
-            
-            showNotification('Account created successfully! Redirecting...', 'success');
-            
-            // Redirect to dashboard after short delay
-            setTimeout(() => {
-                window.location.href = '../Main/dashboard.html';
-            }, 1500);
-            
-        } else {
-            showNotification(data.message || 'Signup failed', 'error');
-        }
-    } catch (error) {
-        showNotification('Network error. Please check if server is running.', 'error');
-    } finally {
-        stopLoading();
-    }
-}
-</script>
 </body>
 </html>
