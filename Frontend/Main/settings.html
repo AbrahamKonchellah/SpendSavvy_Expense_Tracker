@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpendSavvy Settings</title>
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <header>
+        <h1>SpendSavvy Expense Tracker</h1>
+        <nav>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="transactions.html">Transactions</a>
+            <a href="reports.html">Reports</a>
+            <a href="settings.html" class="active">Settings</a>
+            <a href="#" onclick="logout()">Logout</a>
+        </nav>
+    </header>
+
+    <main class="settings-container">
+        <h2>System Settings</h2>
+        
+        <section id="budget-settings" class="setting-card">
+            <h3>Budget Configuration</h3>
+            <p>Set a monthly budget for different spending categories[cite: 27].</p>
+            
+            <form id="set-budget-form">
+                <label for="budget-category">Category:</label>
+                <select id="budget-category" required>
+                    <option value="Food">Food & Beverage</option>
+                    <option value="Rent">Rent</option>
+                    <option value="Transport">Transport</option>
+                    </select>
+
+                <label for="budget-amount">Monthly Limit ($):</label>
+                <input type="number" id="budget-amount" step="0.01" min="0" required>
+                
+                <button type="submit" onclick="setBudget()">Set Budget</button> 
+                <button type="button" onclick="adjustBudget()">Adjust Budget</button>
+            </form>
+            
+            <div id="current-budgets">
+                <h4>Active Budgets:</h4>
+                </div>
+        </section>
+
+        <section id="account-settings" class="setting-card">
+            <h3>Account & Profile</h3>
+            <p>Update your personal information and password.</p>
+            
+            <form id="update-profile-form">
+                <label for="user-name">Name:</label>
+                <input type="text" id="user-name" value="[Current User Name]"> 
+
+                <label for="user-email">Email:</label>
+                <input type="email" id="user-email" value="[Current User Email]" disabled>
+
+                <button type="submit" onclick="updateProfile()">Update Profile</button>
+            </form>
+
+            <form id="change-password-form">
+                <h4>Change Password</h4>
+                <label for="new-password">New Password:</label>
+                <input type="password" id="new-password" required>
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" required>
+                <button type="submit" onclick="updatePassword()">Update Password</button> 
+            </form>
+        </section>
+
+        <section id="data-settings" class="setting-card">
+            <h3>Data & Security</h3>
+            <p>Manage data transmission and compliance.</p>
+            <ul>
+                <li>System complies with GDPR and GPA data protection laws.</li>
+                <li>All data transmission is encrypted using HTTPS.</li>
+            </ul>
+        </section>
+    </main>
+
+    <script src="script.js"></script> 
+</body>
+</html>
